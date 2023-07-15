@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  streamlit:
+    image: streamlit
+    container_name: streamlit-juliani
+    depends_on:
+      - fastapi
+    ports:
+      - "127.0.0.1:8501:8501"
+    volumes:
+      - ${HOME}/visual-modbus/services/streamlit:/app
+    restart: always
+    networks:
+      - mynetwork
