@@ -13,14 +13,6 @@ COPY requirements_streamlit.txt .
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements_streamlit.txt
 
-# Create folder for other streamlit pages
-#RUN mkdir -p pages
-
-# Copy the Streamlit application files into the container
-# COPY app_streamlit_api.py .
-# COPY pages/1_Informes.py pages/
-# COPY pages/2_Donut_Demo.py pages/
-
 # Expose the port for Streamlit
 EXPOSE 8501
 
