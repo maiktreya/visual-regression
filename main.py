@@ -92,14 +92,7 @@ if not df.empty:
         with tab2:
             st.write("Distribución acumulativa (residuos)")
             st.line_chart(cumdis(df['Residuals']))
-            st.write(np.transpose(df))
-            csv = convert_df_csv(df)
-            st.download_button(
-                label="Descargar vista actual en formato CSV",
-                data=csv,
-                file_name='vista_valores.' + str(datetime.now()) + '.csv',
-                mime='text/csv',
-            )
+
     with cols2:
         tab1, tab2 = st.tabs(["Resultados", "Ayuda"])
         with tab1:
@@ -113,3 +106,11 @@ if not df.empty:
             st.write("Durbin-Watson: Estadística que detecta la presencia de autocorrelación en los residuos de una regresión. Valores entre 1.5 y 2.5 sugieren que no hay autocorrelación significativa.")
             st.write("Jarque-Bera: Prueba que evalúa si los residuos tienen la asimetría y la curtosis correspondientes a una distribución normal. Valores cercanos a 0 indican normalidad.")
 
+st.write(np.transpose(df))
+csv = convert_df_csv(df)
+st.download_button(
+    label="Descargar vista actual en formato CSV",
+    data=csv,
+    file_name='vista_valores.' + str(datetime.now()) + '.csv',
+    mime='text/csv',
+)
