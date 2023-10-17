@@ -7,20 +7,12 @@ from scipy.signal import iirfilter
 from datetime import datetime
 import statsmodels.api as sm
 
-# Impòrt and define easy names fetching methods
-from src.fetch import Fetch
-fetch_data = Fetch.fetch_data
-fetch_time_serie = Fetch.fetch_time_serie
-fetch_latest_readings = Fetch.fetch_latest_readings
-fetch_unique_names = Fetch.fetch_unique_names
-fetch_metadata = Fetch.fetch_metadata
 
 
 # start strealit cache to avoid useless reloading
-
-
 @st.cache_data
-# convirt a given df to a format suitable to download formatted as spanish delimited csv
+
+# convert a given df to a format suitable to download formatted as spanish delimited csv
 def convert_df_csv(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv().encode('utf-8-sig')
@@ -85,66 +77,6 @@ def generate_time_series(n):
     df = pd.DataFrame({'Series A': series_a, 'Series B': series_b})
 
     return df
-
-# List devices
-
-
-def list_equipos(host):
-    device_list = fetch_metadata()
-    device_list = pd.DataFrame(device_list)
-    # Create a new column "url" that contains hyperlinks based on "equipo" and "tipo"
-    device_list["url"] = device_list.apply(
-        lambda row: f'{host}?equipo={row["equipo"]}&tipo={row["tipo"]}', axis=1)
-    # Create hyperlink text
-    device_list["url"] = device_list["url"].apply(lambda url: f'[link]({url})')
-    # Rename columns as needed
-    device_list = device_list.rename(columns={
-                                     "tipo": "Modelo ", "alias": "Instalación", "date": "Fecha última comunicación", "url": "Monitorización"}).drop(columns=["cliente"])
-
-    return device_list
-
-# get full table of registers latest reading from a given device
-
-
-def equipo_unico(equipo):
-    response = fetch_latest_readings(equipo)
-    # Convert 'readings' and 'contingency_table' lists of dicts to dataframes
-    df_readings = pd.DataFrame(list(response["readings"]))
-    # Rename 'val' column in 'df_contingency' to 'name'
-    df_contingency = pd.DataFrame(list(response["contingency_table"]))
-    # Join 'df_readings' and 'df_contingency' on 'pos'
-    df_contingency = df_contingency.rename(columns={'val': 'name'})
-    df = pd.merge(df_readings, df_contingency, on='pos', how='left')
-    return df
-
-
-# get a given param from a device
-
-def dato_equipo(equipo, field):
-    response = fetch_metadata().set_index('equipo')
-    response = response.filter(like=equipo, axis=0)[field]
-    response = response.to_string(index=False, header=False)
-    return response
-
-# pair registers to their associated names through contingency tables
-
-
-def names_records(tipo):
-    available_names = fetch_unique_names(tipo)
-    records = available_names.to_dict("records")
-    return records
-
-# format a given datetime to a more readable format
-
-
-def formatted_data_string(equipo):
-    response = fetch_latest_readings(equipo)
-    # Convert dates
-    date_string = pd.Series(response["timestamp"]).head(1)[0]
-    # Convert 'readings' and 'contingency_table' lists of dicts to dataframes
-    result = datetime.fromisoformat(date_string).strftime("%B %d, %Y %H:%M:%S")
-    return result
-
 
 # generate live concurrent timeseries for plotted dynamic charts
 def generate_df(selected_data, equipo, days):
