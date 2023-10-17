@@ -112,4 +112,4 @@ if not df.empty:
             st.write("Omnibus: Prueba estadística que evalúa si la distribución de los residuos es normal. Un valor cercano a 1 sugiere una mayor normalidad.")
             st.write("Durbin-Watson: Estadística que detecta la presencia de autocorrelación en los residuos de una regresión. Valores entre 1.5 y 2.5 sugieren que no hay autocorrelación significativa.")
             st.write("Jarque-Bera: Prueba que evalúa si los residuos tienen la asimetría y la curtosis correspondientes a una distribución normal. Valores cercanos a 0 indican normalidad.")
-    st.write(np.transpose(df))
+
