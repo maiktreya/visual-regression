@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import altair as alt
 import statsmodels.api as sm
-from src.methods import read_file, generate_time_series, cumdis
+from src.methods import read_file, generate_time_series, cumdis, convert_df_csv
 
 st.set_page_config(layout="wide")
 
@@ -60,7 +60,7 @@ if not df.empty:
     alpha = results.params['const']
     beta = results.params['Series A']
     res = results.summary()
-    
+
     # Create the Altair chart object
     scatter_plot = alt.Chart(df).mark_circle().encode(
         alt.X('Series A:Q'),
@@ -91,6 +91,14 @@ if not df.empty:
         with tab2:
             st.write("Distribución acumulativa (residuos)")
             st.line_chart(cumdis(df['Residuals']))
+            st.write(np.transpose(df))
+            csv = convert_df_csv(df)
+            st.download_button(
+                label="Descargar vista actual en formato CSV",
+                data=csv,
+                file_name='vista_valores.' + str(datetime.now()) + '.csv',
+                mime='text/csv',
+            )
     with cols2:
         tab1, tab2 = st.tabs(["Resultados", "Ayuda"])
         with tab1:
