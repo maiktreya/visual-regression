@@ -23,7 +23,7 @@ This app has been derived from a general production setup combining docker + com
 ## Live example
 
 There is an instance of the app described in this repository running on a free server of https://share.streamlit.io/
-The app could be accessed through the following link (lasat check 17/10/2023):
+The app could be accessed through the following link (last check 17/10/2023):
 
 ---------------------------------------
 https://visual-regression.streamlit.app/
