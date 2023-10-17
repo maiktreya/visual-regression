@@ -12,7 +12,7 @@ st.set_page_config(layout="wide")
 df = pd.DataFrame()
 
 # Title of the Streamlit app
-st.subheader('Regresión lineal: Análisis de sesgo')
+st.subheader('Visual univariate Linear Regression')
 
 # Layout the selection
 with st.sidebar:
