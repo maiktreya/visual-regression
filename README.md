@@ -7,7 +7,7 @@ A tool build with streamlit/Python to create an easy web-application to perform 
 
 This app has been derived from a general production setup combining docker + compose.
 
-## App funcionality
+## App functionality 
 
 - Estimates a linear model by Max. Likelihood from either random data or a .csv file provided by the user. The web-app calculates and reports live the following elements (by up-down order of apperance):
     - Reports a simplified equation of regression.
