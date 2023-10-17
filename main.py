@@ -9,13 +9,13 @@ st.set_page_config(layout="wide")
 
 
     # Initialize empty DataFrame
-    df = pd.DataFrame()
+df = pd.DataFrame()
 
     # Title of the Streamlit app
-    st.subheader('Regresión lineal: Análisis de sesgo')
+st.subheader('Regresión lineal: Análisis de sesgo')
 
     # Layout the selection
-    with st.sidebar:
+with st.sidebar:
         option = st.selectbox(
             '¿Preparado para usar tus propios datos?',
             ('Generador aleatorio', 'Upload CSV File'))
